@@ -28,6 +28,9 @@ config_option_t read_config_file(char* path) {
         
         if (fscanf(fp, "%s = %s", &co->key[0], &co->value[0]) != 2) {
             if (feof(fp)) {
+                //EOF reached, close file and free mem
+                fclose(fp);
+				free(co);
                 break;
             }
             if (co->key[0] == '#') {
